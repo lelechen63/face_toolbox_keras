@@ -37,6 +37,7 @@ class IrisDetector():
         gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
         rect = detector(gray, 1)[0]
         landmarks = predictor(gray, rect)
+        print (landmarks)
 
         # except:
         #     raise NameError("Error occured during face detection. Maybe face detector has not been set.")
