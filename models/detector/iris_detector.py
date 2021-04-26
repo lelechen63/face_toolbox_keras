@@ -10,6 +10,18 @@ predictor = dlib.shape_predictor('/raid/celong/lele/github/idinvert_pytorch/util
 FILE_PATH = str(Path(__file__).parent.resolve())
 NET_INPUT_SHAPE = (108, 180)
 
+def shape_to_np(shape, dtype="int"):
+    # initialize the list of (x, y)-coordinates
+    coords = np.zeros((shape.num_parts, 2), dtype=dtype)
+
+    # loop over all facial landmarks and convert them
+    # to a 2-tuple of (x, y)-coordinates
+    for i in range(0, shape.num_parts):
+        coords[i] = (shape.part(i).x, shape.part(i).y)
+
+    # return the list of (x, y)-coordinates
+    return coords
+
 class IrisDetector():
     def __init__(self, path_elg_weights=FILE_PATH+"/ELG/elg_keras.h5"):
         self.elg = None
@@ -37,6 +49,7 @@ class IrisDetector():
         gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
         rect = detector(gray, 1)[0]
         landmarks = predictor(gray, rect)
+        landmarks = shape_to_np(landmarks)
         print (landmarks)
 
         # except:
