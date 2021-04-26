@@ -45,10 +45,10 @@ gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
 bbox = detector(gray, 1)[0]
 # (x, y, w, h) = rect_to_bb(bboxes[0])
 
-x0 = int(rect.left())
-x1 = int(rect.right())
-y0 = int(rect.top())
-y1 = int(rect.bottom())
+x0 = int(bbox.left())
+x1 = int(bbox.right())
+y0 = int(bbox.top())
+y1 = int(bbox.bottom())
 
 plt.subplot(1,2,1)
 plt.imshow(draw)
