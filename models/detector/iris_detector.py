@@ -1,8 +1,11 @@
 import numpy as np
 import cv2
 from pathlib import Path
-
+import dlib
 from .ELG.elg_keras import KerasELG
+
+detector = dlib.get_frontal_face_detector()
+predictor = dlib.shape_predictor('/raid/celong/lele/github/idinvert_pytorch/utils/shape_predictor_68_face_landmarks.dat')
 
 FILE_PATH = str(Path(__file__).parent.resolve())
 NET_INPUT_SHAPE = (108, 180)
@@ -30,11 +33,13 @@ class IrisDetector():
             output_eye_landmarks: list of eye landmarks having shape (2, 18, 2) with ordering (L/R, landmarks, x/y).
         """
             
-        if landmarks == None:
-            try:    
-                faces, landmarks = self.detector.detect_face(im, with_landmarks=True)     
-            except:
-                raise NameError("Error occured during face detection. Maybe face detector has not been set.")
+        # try:    
+        gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
+        rect = detector(gray, 1)[0]
+        landmarks = predictor(gray, rect)
+
+        # except:
+        #     raise NameError("Error occured during face detection. Maybe face detector has not been set.")
                 
         left_eye_idx = slice(36, 42)
         right_eye_idx = slice(42, 48)
