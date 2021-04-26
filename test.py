@@ -1,5 +1,6 @@
 import cv2
 from matplotlib import pyplot as plt
+from models.detector import face_detector
 
 import numpy as np 
 
