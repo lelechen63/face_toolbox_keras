@@ -4,8 +4,6 @@ from pathlib import Path
 import dlib
 from .ELG.elg_keras import KerasELG
 
-detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor('/raid/celong/lele/github/idinvert_pytorch/utils/shape_predictor_68_face_landmarks.dat')
 
 FILE_PATH = str(Path(__file__).parent.resolve())
 NET_INPUT_SHAPE = (108, 180)
@@ -34,8 +32,9 @@ class IrisDetector():
         self.elg = KerasELG()
         self.elg.net.load_weights(self.path_elg_weights)
         
-    def set_detector(self, detector):
+    def set_detector(self, detector, predictor):
         self.detector = detector
+        self.predictor = predictor
         
     def detect_iris(self, im, landmarks=None):
         """
@@ -47,8 +46,8 @@ class IrisDetector():
             
         # try:    
         gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
-        rect = detector(gray, 1)[0]
-        landmarks = predictor(gray, rect)
+        rect = self.detector(gray, 1)[0]
+        landmarks = self.predictor(gray, rect)
         lm = shape_to_np(landmarks)
         print (lm)
 
