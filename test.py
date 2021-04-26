@@ -18,7 +18,7 @@ h, w, _ = im.shape
 # plt.imshow(im)
 idet = IrisDetector()
 eye_lms = idet.detect_iris(im)
-print (eye_lms.shape)
+# print (eye_lms.shape)
 # Display detection result
 plt.figure(figsize=(15,10))
 draw = idet.draw_pupil(im, eye_lms[0][0,...]) # draw left eye
