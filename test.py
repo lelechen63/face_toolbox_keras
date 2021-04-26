@@ -1,6 +1,7 @@
 import cv2
 from matplotlib import pyplot as plt
 from models.detector import face_detector
+from models.detector.iris_detector import IrisDetector
 
 import numpy as np 
 def resize_image(im, max_size=768):
@@ -14,7 +15,7 @@ fd = face_detector.FaceAlignmentDetector(
 )
 
 im = cv2.imread("images/test5.jpg")[..., ::-1]
-im = resize_image(im) # Resize image to prevent GPU OOM.
+# im = resize_image(im) # Resize image to prevent GPU OOM.
 h, w, _ = im.shape
 # plt.imshow(im)
 idet = IrisDetector()
