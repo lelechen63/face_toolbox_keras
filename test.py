@@ -3,7 +3,12 @@ from matplotlib import pyplot as plt
 from models.detector import face_detector
 
 import numpy as np 
-
+def resize_image(im, max_size=768):
+    if np.max(im.shape) > max_size:
+        ratio = max_size / np.max(im.shape)
+        print(f"Resize image to ({str(int(im.shape[1]*ratio))}, {str(int(im.shape[0]*ratio))}).")
+        return cv2.resize(im, (0,0), fx=ratio, fy=ratio)
+    return im
 fd = face_detector.FaceAlignmentDetector(
     lmd_weights_path="./models/detector/FAN/2DFAN-4_keras.h5"# 2DFAN-4_keras.h5, 2DFAN-1_keras.h5
 )
