@@ -143,7 +143,7 @@ class IrisDetector():
         blank_image = np.zeros((im.shape[2],im.shape[1],3), np.uint8)
         print (lms.shape)
         print (lms)
-        print (blank_image)
+        print (blank_image.shape)
         cv2.drawContours(blank_image,lms[:8], -1, (0,255,0), 3)
         cv2.drawContours(blank_image,lms[8:16], -1, (255,0,0), 3)
         cv2.imwrite('./gg.png',blank_image)
