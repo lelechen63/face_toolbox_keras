@@ -61,9 +61,9 @@ class IrisDetector():
         for lm in landmarks:
             lm = lm[:,::-1]
             left_eye_im, left_x0y0 = self.get_eye_roi(im, lm[left_eye_idx])
-            cv2.imwrite('gg1.png', left_eye_im)
+            # cv2.imwrite('gg1.png', left_eye_im)
             right_eye_im, right_x0y0 = self.get_eye_roi(im, lm[right_eye_idx])
-            cv2.imwrite('gg2.png', right_eye_im)
+            # cv2.imwrite('gg2.png', right_eye_im)
             inp_left = self.preprocess_eye_im(left_eye_im)
             inp_right = self.preprocess_eye_im(right_eye_im)
             
@@ -136,5 +136,12 @@ class IrisDetector():
         draw = cv2.circle(draw, (pupil_center[0], pupil_center[1]), stroke, (255,255,0), -1)        
         draw = cv2.polylines(draw, [np.array(pnts_outerline).reshape(-1,1,2)], isClosed=True, color=(125,255,125), thickness=stroke//2)
         draw = cv2.polylines(draw, [np.array(pnts_innerline).reshape(-1,1,2)], isClosed=True, color=(125,125,255), thickness=stroke//2)
+        
+        blank_image = np.zeros((height,width,3), np.uint8)
+        cv.drawContours(blank_image,lm[:8], -1, (0,255,0), 3)
+        cv.drawContours(blank_image,lm[8:16], -1, (255,0,0), 3)
+        cv2.imwrite('./gg.png',blank_image)
+
+        
         return draw
         
