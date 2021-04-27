@@ -140,7 +140,7 @@ class IrisDetector():
         draw = cv2.polylines(draw, [np.array(pnts_outerline).reshape(-1,1,2)], isClosed=True, color=(125,255,125), thickness=stroke//2)
         draw = cv2.polylines(draw, [np.array(pnts_innerline).reshape(-1,1,2)], isClosed=True, color=(125,125,255), thickness=stroke//2)
         
-        blank_image = np.zeros((im.shape[2],im.shape[1],3), np.uint8)
+        blank_image = np.zeros((im.shape[1],im.shape[0],3), np.uint8)
         print (lms.shape)
         print (lms)
         print (blank_image.shape)
