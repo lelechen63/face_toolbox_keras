@@ -4,7 +4,8 @@ import face_alignment
 from models.detector.iris_detector import IrisDetector
 import dlib
 import numpy as np 
-
+import os
+os.environ["CUDA_VISIBLE_DEVICES"]="0"
 
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor('/raid/celong/lele/github/idinvert_pytorch/utils/shape_predictor_68_face_landmarks.dat')
