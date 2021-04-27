@@ -144,8 +144,8 @@ class IrisDetector():
         print (lms.shape)
         print (lms)
         print (blank_image.shape)
-        cv2.drawContours(blank_image,lms[:8], -1, (0,255,0), 3)
-        cv2.drawContours(blank_image,lms[8:16], -1, (255,0,0), 3)
+        cv2.drawContours(blank_image,lms[:8], -1, (0,255,0))
+        cv2.drawContours(blank_image,lms[8:16], -1, (255,0,0))
         cv2.imwrite('./gg.png',blank_image)
 
         draw = 0.5*draw + 0.5 * blank_image
