@@ -49,7 +49,7 @@ class IrisDetector():
         # landmarks = self.predictor(gray, rect)
         # lm = shape_to_np(landmarks)
         # print (lm)
-        faces, landmarks = self.detector.detect_face(im, with_landmarks=True) 
+        landmarks = self.detector.get_landmarks(im)
 
         # except:
         #     raise NameError("Error occured during face detection. Maybe face detector has not been set.")
