@@ -23,12 +23,11 @@ def resize_image(im, max_size=768):
 im = cv2.imread("images/test5.jpg")[..., ::-1]
 im = resize_image(im) # Resize image to prevent GPU OOM.
 h, w, _ = im.shape
-# plt.imshow(im)
 idet = IrisDetector()
 idet.set_detector(fa)
 
 eye_lms = idet.detect_iris(im)
-# print (eye_lms.shape)
+
 # Display detection result
 plt.figure(figsize=(15,10))
 draw = idet.draw_pupil(im, eye_lms[0][0,...]) # draw left eye
@@ -44,10 +43,6 @@ lms =   eye_lms[0][1,...].astype(np.int32)[:,::-1]
 cv2.fillConvexPoly(blank_image, lms[:8], (0,0,255))
 cv2.fillConvexPoly(blank_image, lms[8:16], (255,0,0))
 cv2.imwrite('gg.png', blank_image)
-draw = draw * 0.5 + blank_image * 0.5
-# bboxes = fd.detect_face(im, with_landmarks=False)
-# x0, y0, x1, y1, _ = bboxes[0].astype(np.int32)
-
 
 gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
 # detect faces in the grayscale image

@@ -139,8 +139,5 @@ class IrisDetector():
         draw = cv2.circle(draw, (pupil_center[0], pupil_center[1]), stroke, (255,255,0), -1)        
         draw = cv2.polylines(draw, [np.array(pnts_outerline).reshape(-1,1,2)], isClosed=True, color=(125,255,125), thickness=stroke//2)
         draw = cv2.polylines(draw, [np.array(pnts_innerline).reshape(-1,1,2)], isClosed=True, color=(125,125,255), thickness=stroke//2)
-        
-
-    
         return draw
         
