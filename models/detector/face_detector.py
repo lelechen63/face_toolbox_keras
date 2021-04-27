@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from pathlib import Path
 import tensorflow as tf
-from keras import backend as K
+from tensorflow.keras import backend as K
 
 from .s3fd.s3fd_detector import S3FD
 from .mtcnn.mtcnn_detector import MTCNN
