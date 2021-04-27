@@ -20,15 +20,28 @@ fa = face_alignment.FaceAlignment(face_alignment.LandmarksType._2D, flip_input=F
 #         print(f"Resize image to ({str(int(im.shape[1]*ratio))}, {str(int(im.shape[0]*ratio))})  在好  
 root = '/raid/celong/FaceScape/'
 
+
+def get_imgs(dir):
+    images = []
+    assert os.path.isdir(dir), '%s is not a valid directory' % dir
+
+    for root, _, fnames in sorted(os.walk(dir)):
+        for fname in fnames:
+            if is_image_file(fname):
+                path = os.path.join(root, fname)
+                images.append(path)
+
+    return images
+
 def get_imgs():
 
     _file = open(os.path.join(root, "lists/train.pkl"), "rb")
     data_list = pickle.load(_file)
     _file.close()
 
-    _file = open(os.path.join(root, "lists/test.pkl"), "rb")
-    data_list.extend(pickle.load(_file))
-    _file.close()
+    # _file = open(os.path.join(root, "lists/test.pkl"), "rb")
+    # data_list.extend(pickle.load(_file))
+    # _file.close()
 
     return data_list
 
