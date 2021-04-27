@@ -117,7 +117,7 @@ class IrisDetector():
         pupil_center = np.zeros((2,))
         pnts_outerline = []
         pnts_innerline = []
-        lms =  lms.astype(int)
+        lms =  lms.astype(np.int32)
         for i, lm in enumerate(np.squeeze(lms)):
             
             x, y = int(lm[0]), int(lm[1])
