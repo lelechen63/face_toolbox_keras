@@ -117,6 +117,7 @@ class IrisDetector():
         pnts_outerline = []
         pnts_innerline = []
         for i, lm in enumerate(np.squeeze(lms)):
+            lm =  lm.astype(int)
             x, y = int(lm[0]), int(lm[1])
 
             if i < 8:
@@ -138,6 +139,9 @@ class IrisDetector():
         draw = cv2.polylines(draw, [np.array(pnts_innerline).reshape(-1,1,2)], isClosed=True, color=(125,125,255), thickness=stroke//2)
         
         blank_image = np.zeros((im.shape[2],im.shape[1],3), np.uint8)
+        print (lm.shape)
+        print (lm)
+        print (blank_image)
         cv2.drawContours(blank_image,lm[:8], -1, (0,255,0), 3)
         cv2.drawContours(blank_image,lm[8:16], -1, (255,0,0), 3)
         cv2.imwrite('./gg.png',blank_image)
