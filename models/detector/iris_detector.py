@@ -32,9 +32,8 @@ class IrisDetector():
         self.elg = KerasELG()
         self.elg.net.load_weights(self.path_elg_weights)
         
-    def set_detector(self, detector, predictor):
+    def set_detector(self, detector):
         self.detector = detector
-        self.predictor = predictor
         
     def detect_iris(self, im, landmarks=None):
         """
@@ -45,11 +44,12 @@ class IrisDetector():
         """
             
         # try:    
-        gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
-        rect = self.detector(gray, 1)[0]
-        landmarks = self.predictor(gray, rect)
-        lm = shape_to_np(landmarks)
-        print (lm)
+        # gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
+        # rect = self.detector(gray, 1)[0]
+        # landmarks = self.predictor(gray, rect)
+        # lm = shape_to_np(landmarks)
+        # print (lm)
+        faces, landmarks = self.detector.detect_face(im, with_landmarks=True) 
 
         # except:
         #     raise NameError("Error occured during face detection. Maybe face detector has not been set.")
@@ -57,20 +57,20 @@ class IrisDetector():
         left_eye_idx = slice(36, 42)
         right_eye_idx = slice(42, 48)
         output_eye_landmarks = []
-        # for lm in landmarks:
-        left_eye_im, left_x0y0 = self.get_eye_roi(im, lm[left_eye_idx])
-        right_eye_im, right_x0y0 = self.get_eye_roi(im, lm[right_eye_idx])
-        inp_left = self.preprocess_eye_im(left_eye_im)
-        inp_right = self.preprocess_eye_im(right_eye_im)
-        
-        input_array = np.concatenate([inp_left, inp_right], axis=0)            
-        pred_left, pred_right = self.elg.net.predict(input_array)
-        
-        lms_left = self.elg._calculate_landmarks(pred_left, eye_roi=left_eye_im)
-        lms_right = self.elg._calculate_landmarks(pred_right, eye_roi=right_eye_im)
-        eye_landmarks = np.concatenate([lms_left, lms_right], axis=0)
-        eye_landmarks = eye_landmarks + np.array([left_x0y0, right_x0y0]).reshape(2,1,2)
-        output_eye_landmarks.append(eye_landmarks)
+        for lm in landmarks:
+            left_eye_im, left_x0y0 = self.get_eye_roi(im, lm[left_eye_idx])
+            right_eye_im, right_x0y0 = self.get_eye_roi(im, lm[right_eye_idx])
+            inp_left = self.preprocess_eye_im(left_eye_im)
+            inp_right = self.preprocess_eye_im(right_eye_im)
+            
+            input_array = np.concatenate([inp_left, inp_right], axis=0)            
+            pred_left, pred_right = self.elg.net.predict(input_array)
+            
+            lms_left = self.elg._calculate_landmarks(pred_left, eye_roi=left_eye_im)
+            lms_right = self.elg._calculate_landmarks(pred_right, eye_roi=right_eye_im)
+            eye_landmarks = np.concatenate([lms_left, lms_right], axis=0)
+            eye_landmarks = eye_landmarks + np.array([left_x0y0, right_x0y0]).reshape(2,1,2)
+            output_eye_landmarks.append(eye_landmarks)
         return output_eye_landmarks
     
     @staticmethod
