@@ -60,7 +60,9 @@ class IrisDetector():
         output_eye_landmarks = []
         for lm in landmarks:
             left_eye_im, left_x0y0 = self.get_eye_roi(im, lm[left_eye_idx])
+            cv2.imwrite('gg1.png', left_eye_im)
             right_eye_im, right_x0y0 = self.get_eye_roi(im, lm[right_eye_idx])
+            cv2.imwrite('gg2.png', right_eye_im)
             inp_left = self.preprocess_eye_im(left_eye_im)
             inp_right = self.preprocess_eye_im(right_eye_im)
             
