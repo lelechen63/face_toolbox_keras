@@ -8,6 +8,7 @@ import numpy as np
 
 # detector = dlib.get_frontal_face_detector()
 # predictor = dlib.shape_predictor('/raid/celong/lele/github/idinvert_pytorch/utils/shape_predictor_68_face_landmarks.dat')
+
 fd = face_detector.FaceAlignmentDetector(
     lmd_weights_path="./models/detector/FAN/2DFAN-4_keras.h5"# 2DFAN-4_keras.h5, 2DFAN-1_keras.h5
 )
@@ -24,7 +25,7 @@ im = resize_image(im) # Resize image to prevent GPU OOM.
 h, w, _ = im.shape
 # plt.imshow(im)
 idet = IrisDetector()
-idet.set_detector(fa)
+idet.set_detector(fd)
 
 eye_lms = idet.detect_iris(im)
 # print (eye_lms.shape)
