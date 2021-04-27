@@ -5,6 +5,7 @@ from models.detector.iris_detector import IrisDetector
 import dlib
 import numpy as np 
 import os
+import pickle
 os.environ["CUDA_VISIBLE_DEVICES"]="0"
 
 detector = dlib.get_frontal_face_detector()
@@ -17,18 +18,19 @@ fa = face_alignment.FaceAlignment(face_alignment.LandmarksType._2D, flip_input=F
 #     if np.max(im.shape) > max_size:
 #         ratio = max_size / np.max(im.shape)呢
 #         print(f"Resize image to ({str(int(im.shape[1]*ratio))}, {str(int(im.shape[0]*ratio))})  在好  
+root = '/raid/celong/FaceScape/'
+
 def get_imgs():
 
-    _file = open(os.path.join(opt.dataroot, "lists/train.pkl"), "rb")
+    _file = open(os.path.join(root, "lists/train.pkl"), "rb")
     data_list = pickle.load(_file)
     _file.close()
 
-    _file = open(os.path.join(opt.dataroot, "lists/test.pkl"), "rb")
+    _file = open(os.path.join(root, "lists/test.pkl"), "rb")
     data_list.extend(pickle.load(_file))
     _file.close()
 
     return data_list
-root = '/raid/celong/FaceScape/'
 
 dir_B = os.path.join(root , "fsmview_images")
 data_list = get_imgs()
