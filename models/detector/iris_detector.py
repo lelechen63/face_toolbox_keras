@@ -117,7 +117,7 @@ class IrisDetector():
         pupil_center = np.zeros((2,))
         pnts_outerline = []
         pnts_innerline = []
-        lms =  lms.astype(np.int32)
+        
         for i, lm in enumerate(np.squeeze(lms)):
             
             x, y = int(lm[0]), int(lm[1])
@@ -140,17 +140,7 @@ class IrisDetector():
         draw = cv2.polylines(draw, [np.array(pnts_outerline).reshape(-1,1,2)], isClosed=True, color=(125,255,125), thickness=stroke//2)
         draw = cv2.polylines(draw, [np.array(pnts_innerline).reshape(-1,1,2)], isClosed=True, color=(125,125,255), thickness=stroke//2)
         
-        blank_image = np.zeros((im.shape[0],im.shape[1]), np.uint8)
-        print (lms.shape)
-        print (lms)
-        print (blank_image.shape)
-        cv2.fillConvexPoly(blank_image, lms[:8], 255)
-        cv2.fillConvexPoly(blank_image, lms[8:16], 128)
 
-
-       
-        cv2.imwrite('./gg.png',blank_image)
-
-        draw = 0.5*draw + 0.5 * blank_image
+    
         return draw
         
